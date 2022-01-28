@@ -13,6 +13,9 @@ defmodule Blazer do
 
   """
   def hello do
+    1..10
+    |> Enum.map(fn _ -> 10 end)
+    |> IO.inspect
     :world
   end
 end
