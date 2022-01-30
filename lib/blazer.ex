@@ -3,19 +3,13 @@ defmodule Blazer do
   Documentation for `Blazer`.
   """
 
-  @doc """
-  Hello world.
+  alias Blazer.Native
 
-  ## Examples
-
-      iex> Blazer.hello()
-      :world
-
-  """
-  def hello do
-    1..10
-    |> Enum.map(fn _ -> 10 end)
-    |> IO.inspect
-    :world
+  def parse(term, opts \\ []) do
+    target_case = Keyword.get(opts, :case, :camel)
+      case term do
+        x when is_binary(x) -> Native.convert_binary(x, target_case)
+        x when is_map(x) -> Native.convert_map(x, target_case)
+      end
   end
 end
