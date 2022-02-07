@@ -13,8 +13,8 @@ defmodule Blazer do
 
   def encode_to_iodata!(input, opts \\ []) do
     input
-      |> parse(opts)
-      |> Jason.encode_to_iodata!()
+    |> parse(opts)
+    |> Jason.encode_to_iodata!()
   end
 
   def encode(input, opts \\ []) do
@@ -44,11 +44,12 @@ defmodule Blazer do
   def decode!(input, opts \\ []) do
     force!(fn -> decode(input, opts) end)
   end
-  
 
-  defp transform(term, target_case) when is_binary(term), do: Native.convert_binary(term, target_case)
+  defp transform(term, target_case) when is_binary(term),
+    do: Native.convert_binary(term, target_case)
+
   defp transform(term, target_case) when is_map(term), do: Native.convert_map(term, target_case)
-  defp transform(_term, _target_case), do: raise "only strings and maps are accepted."
+  defp transform(_term, _target_case), do: raise("only strings and maps are accepted.")
 
   defp force!(fun) do
     case fun.() do
@@ -64,10 +65,13 @@ defmodule Blazer do
     cond do
       Keyword.get(opts, :case) ->
         {:ok, Keyword.get(opts, :case)}
+
       Application.get_env(:blazer, direction) ->
         {:ok, Application.get_env(:blazer, direction)}
+
       true ->
-        {:error, "Target case not provided, either pass an case in the options or set in the configs."}
+        {:error,
+         "Target case not provided, either pass an case in the options or set in the configs."}
     end
   end
 end

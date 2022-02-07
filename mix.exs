@@ -20,7 +20,8 @@ defmodule Blazer.MixProject do
   defp deps do
     [
       {:rustler, "~> 0.23.0"},
-      {:jason, "~> 1.3"}
+      {:jason, "~> 1.3"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 end
