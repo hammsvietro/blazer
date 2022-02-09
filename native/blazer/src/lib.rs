@@ -1,5 +1,6 @@
 mod parser;
 mod cases;
+mod model;
 
 use rustler::{Term, Atom, types::atom, Encoder};
 use parser::parser::{return_for_map, parse_string};
@@ -14,6 +15,7 @@ fn convert_map<'a>(term: Term<'a>, case: Term<'a>) -> Term<'a> {
 
 #[rustler::nif]
 fn convert_binary<'a>(term: Term<'a>, case: Term<'a>) -> Term<'a> {
+  let _options = model::options::BlazerOptions::from_term(case);
   match cases::case::get_case(&case) {
     Ok(case) => encode_return((atom::ok() ,parse_string(term, case))),
     Err(err) => encode_return((atom::error(), err))
