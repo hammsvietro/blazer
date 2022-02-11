@@ -5,11 +5,11 @@ defmodule Blazer do
 
   alias Blazer.Native
 
-  def parse(input, target_case) do
-    transform(input, target_case)
+  def parse(input, opts) do
+    transform(input, opts)
   end
 
-  def parse!(input, target_case), do: force!(fn -> parse(input, target_case) end)
+  def parse!(input, opts), do: force!(fn -> parse(input, opts) end)
 
   def encode_to_iodata!(input, opts \\ []) do
     input
@@ -45,10 +45,10 @@ defmodule Blazer do
     force!(fn -> decode(input, opts) end)
   end
 
-  defp transform(term, target_case) when is_binary(term),
-    do: Native.convert_binary(term, target_case)
+  defp transform(term, opts) when is_binary(term),
+    do: Native.convert_binary(term, opts)
 
-  defp transform(term, target_case) when is_map(term), do: Native.convert_map(term, target_case)
+  defp transform(term, opts) when is_map(term), do: Native.convert_map(term, opts)
   defp transform(_term, _target_case), do: raise("only strings and maps are accepted.")
 
   defp force!(fun) do

@@ -11,7 +11,7 @@ pub fn get_case<'a>(term: &Term<'a>) -> Result<Case, Term<'a>> {
        "title" => Ok(Case::Title),
        _ => {
            let env = term.get_env();
-           Err(string_to_term("this case is not supported, refer to the documentation for more info.".into(), env))
+           Err(string_to_term("this case is not supported, refer to the documentation for more info.".into(), &rustler::TermType::Binary ,env))
        }
     }
 } 
