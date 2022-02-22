@@ -18,10 +18,10 @@ defmodule Blazer do
   Parses a map or a string to the desired case
 
   ```elixir
-  iex(1)> parse(%{"firstKey" => "data", "secondKey" => "data"}, case: :snake, keys: :atoms)
+  iex(1)> Blazer.parse(%{"firstKey" => "data", "secondKey" => "data"}, case: :snake, keys: :atoms)
   {:ok, %{first_key: "data", second_key: "data"}}
 
-  iex(2)> parse("john_doe", case: :title)
+  iex(2)> Blazer.parse("john_doe", case: :title)
   {:ok, "John Doe"}
   ```
   """
