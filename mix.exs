@@ -42,7 +42,7 @@ defmodule Blazer.MixProject do
       extras: [
         "README.md": [title: "Overview"],
         "CHANGELOG.md": [title: "Changelog"],
-        "LICENSE.md": [title: "License"]
+        "LICENSE": [title: "License"]
       ],
       main: "readme",
       source_url: @source_url,
