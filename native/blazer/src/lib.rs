@@ -7,16 +7,16 @@ use rustler::{types::atom, Atom, Encoder, Term};
 use model::options::BlazerOptions;
 
 #[rustler::nif]
-fn convert_map<'a>(term: Term<'a>, case: Term<'a>) -> Term<'a> {
-    match BlazerOptions::from_term(case) {
-        Ok(case) => encode_return((atom::ok(), parse_map(&term, case))),
+fn convert_map<'a>(term: Term<'a>, opts: Term<'a>) -> Term<'a> {
+    match BlazerOptions::from_term(opts) {
+        Ok(options) => encode_return((atom::ok(), parse_map(term, &options))),
         Err(err) => encode_return((atom::error(), err)),
     }
 }
 
 #[rustler::nif]
-fn convert_binary<'a>(term: Term<'a>, case: Term<'a>) -> Term<'a> {
-    match BlazerOptions::from_term(case) {
+fn convert_binary<'a>(term: Term<'a>, opts: Term<'a>) -> Term<'a> {
+    match BlazerOptions::from_term(opts) {
         Ok(options) => encode_return((atom::ok(), parse_string(term, &options))),
         Err(err) => encode_return((atom::error(), err)),
     }
