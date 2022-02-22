@@ -45,4 +45,4 @@ There you go! Now every map key will use elixir's standard snake case while exte
 Contributions are very welcome! Feel free to open an issue =)
 
 # License
-Blazer source code is licensed under the [MIT License](LICENSE.md).
+Blazer source code is licensed under the [MIT License](LICENSE).
