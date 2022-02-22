@@ -4,8 +4,8 @@ use convert_case::Casing;
 use core::panic;
 use rustler::Term;
 
-pub fn parse_map<'a>(map: &Term<'a>, options: BlazerOptions) -> Term<'a> {
-    let iterator = rustler::MapIterator::new(*map).unwrap();
+pub fn parse_map<'a>(map: Term<'a>, options: &BlazerOptions) -> Term<'a> {
+    let iterator = rustler::MapIterator::new(map).unwrap();
     let env = Term::get_env(&map);
 
     let (keys, values): (Vec<Term<'a>>, Vec<Term<'a>>) = iterator
@@ -15,7 +15,12 @@ pub fn parse_map<'a>(map: &Term<'a>, options: BlazerOptions) -> Term<'a> {
                 rustler::TermType::Binary => parse_string,
                 _ => panic!("can't parse any other type"),
             };
-            (transform_fn(key, &options), value)
+            let verified_value: Term<'a> = match value.get_type() {
+                rustler::TermType::Map => parse_map(value, options),
+                _ => value
+
+            };
+            (transform_fn(key, &options), verified_value)
         })
         .unzip();
     Term::map_from_arrays(env, &keys.as_slice(), &values.as_slice()).unwrap()

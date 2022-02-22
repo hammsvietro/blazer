@@ -1,11 +1,14 @@
 # Blazer
 
-**TODO: Add description**
+Blazer is a blazingly fast case parser for json keys using NIFs.
+
+Useful to consume camel/pascal cased APIs while still using elixir's snake case convention
+
+Uses [Jason](https://hexdocs.pm/jason/readme.html) to parse the json data.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `blazer` to your list of dependencies in `mix.exs`:
+It can be installed by adding `blazer` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +18,31 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/blazer](https://hexdocs.pm/blazer).
 
+# Basic Usage
+
+```elixir
+iex(1)> Blazer.parse(%{"categoryId" => 13, "profileName" => "hammsvietro"}, case: :snake)
+{:ok, %{category_id: 13, profile_name: "hammsvietro"}}
+
+
+iex(2)> Jason.encode!(%{"category_id" => 13, "profile_name" => "hammsvietro"}, case: :camel))
+"{\"categoryId\":13,\"profileName\":\"hammsvietro\"}"
+
+
+```
+# Usage with Phoenix
+In your config.exs:
+```elixir
+
+config :blazer, inner_case: :snake, outer_case: :camel
+config :phoenix, :json_library, Blazer
+```
+There you go! Now every map key will use elixir's standard snake case while externally the API will produce/consume camel cased properties
+
+
+# Contributing
+Contributions are very welcome! Feel free to open an issue =)
+
+# License
+Blazer source code is licensed under the [MIT License](LICENSE.md).

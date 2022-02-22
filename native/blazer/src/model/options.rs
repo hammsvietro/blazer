@@ -2,6 +2,7 @@ use super::super::cases::case::get_case;
 use super::super::parser::string::string_to_term;
 use rustler::{Term, TermType};
 
+#[derive(Debug)]
 pub struct BlazerOptions<'a> {
     pub case: convert_case::Case,
     pub keys: &'a TermType,
