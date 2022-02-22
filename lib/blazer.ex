@@ -26,21 +26,19 @@ defmodule Blazer do
   ```
   """
 
-  @type opts :: [ case: :camel|:pascal|:snake|:upper|:title, keys: :strings|:atoms|:atoms!]
+  @type opts :: [ case: :camel|:pascal|:snake|:upper|:kebab|:title, keys: :strings|:atoms|:atoms!]
   @spec parse(String.t() | map(), Opts.t()) :: {:ok, String.t() | map()} | {:error, String.t()}
-  def parse(input, opts) do
-    transform(input, opts)
-  end
+  def parse(term, opts), do: transform(term, opts)
 
   @spec parse!(String.t() | map(), Opts.t()) :: String.t() | map()
-  def parse!(input, opts), do: force!(fn -> parse(input, opts) end)
+  def parse!(term, opts), do: force!(fn -> parse(term, opts) end)
 
   @spec encode_to_iodata!(map(), opts) :: [...]
-  def encode_to_iodata!(input, opts \\ []) do
+  def encode_to_iodata!(term, opts \\ []) do
     {:ok, opts} = get_out_opts(opts)
-    input
-    |> parse!(opts)
-    |> Jason.encode_to_iodata!(opts)
+    term
+      |> parse!(opts)
+      |> Jason.encode_to_iodata!(opts)
   end
 
   @doc"""
@@ -49,9 +47,9 @@ defmodule Blazer do
   `opts` is passed to Jason, so all its options can be used
   """
   @spec encode(map(), opts) :: {:ok, String.t()} | {:error, String.t()}
-  def encode(input, opts \\ []) do
+  def encode(term, opts \\ []) do
     with {:ok, opts} <- get_out_opts(opts),
-         {:ok, parsed} <- transform(input, opts),
+         {:ok, parsed} <- transform(term, opts),
          {:ok, encoded} <- Jason.encode(parsed, opts) do
       {:ok, encoded}
     else
@@ -60,9 +58,7 @@ defmodule Blazer do
   end
 
   @spec encode!(map(), opts) :: String.t()
-  def encode!(input, opts \\ []) do
-    force!(fn -> encode(input, opts) end)
-  end
+  def encode!(term, opts \\ []), do: force!(fn -> encode(term, opts) end)
 
   @doc"""
   Decode a JSON into a map and parse its keys
@@ -70,9 +66,9 @@ defmodule Blazer do
   `opts` is passed to Jason, so all its options can be used
   """
   @spec decode(String.t(), opts) :: {:ok, map()} | {:error, String.t()}
-  def decode(input, opts \\ []) do
+  def decode(json, opts \\ []) do
     with {:ok, opts} <- get_in_opts(opts),
-         {:ok, decoded} <- Jason.decode(input, opts),
+         {:ok, decoded} <- Jason.decode(json, opts),
          {:ok, parsed} <- transform(decoded, opts) do
       {:ok, parsed}
     else
@@ -81,8 +77,8 @@ defmodule Blazer do
   end
 
   @spec decode!(String.t(), opts) :: map()
-  def decode!(input, opts \\ []) do
-    force!(fn -> decode(input, opts) end)
+  def decode!(json, opts \\ []) do
+    force!(fn -> decode(json, opts) end)
   end
 
   defp transform(term, opts) when is_binary(term),

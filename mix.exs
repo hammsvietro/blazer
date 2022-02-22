@@ -28,7 +28,7 @@ defmodule Blazer.MixProject do
   defp package do
     [
       description: "A blazingly fast case parser for maps and strings",
-      files: ["lib", "mix.exs", "README*", "CHANGELOG*", "LICENSE*"],
+      files: ["lib", "native", "mix.exs", "README*", "CHANGELOG*", "LICENSE*"],
       maintainers: ["Pedro Hamms Vietro"],
       licenses: ["MIT"],
       links: %{

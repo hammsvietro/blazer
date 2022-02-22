@@ -1,6 +1,6 @@
 # Blazer
 
-Blazer is a blazingly fast case parser for json keys using NIFs.
+Blazer is a blazingly fast case parser for maps, strings and JSON using NIFs.
 
 Useful to consume camel/pascal cased APIs while still using elixir's snake case convention
 
@@ -13,7 +13,7 @@ It can be installed by adding `blazer` to your list of dependencies in `mix.exs`
 ```elixir
 def deps do
   [
-    {:blazer, "~> 0.1.0"}
+    {:blazer, "~> 0.1.1"}
   ]
 end
 ```
