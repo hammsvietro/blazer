@@ -6,6 +6,8 @@ Useful to consume camel/pascal cased APIs while still using elixir's snake case 
 
 Uses [Jason](https://hexdocs.pm/jason/readme.html) to parse the json data.
 
+[Documentation](https://hexdocs.pm/blazer/Blazer.html)
+
 ## Installation
 
 It can be installed by adding `blazer` to your list of dependencies in `mix.exs`:
