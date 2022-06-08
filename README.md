@@ -1,6 +1,6 @@
 # Blazer
 
-Blazer is a blazingly fast case parser for maps, strings and JSON using NIFs.
+Blazer is a fast case parser for maps, strings and JSON using NIFs.
 
 Useful to consume camel/pascal cased APIs while still using elixir's snake case convention
 
